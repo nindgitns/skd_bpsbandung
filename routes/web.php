@@ -1,15 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ResponsesController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-
-Route::get('/login', function () {
-    return view('signin');
-})->name('login');
 
 // Blok 1
 Route::get('/blok1', [ResponsesController::class, 'showBlok1'])->name('blok1');
@@ -25,3 +23,20 @@ Route::post('/blok3', [ResponsesController::class, 'submitBlok3'])->name('blok3.
 
 Route::get('/blok4', [ResponsesController::class, 'showBlok4'])->name('blok4');
 Route::post('/blok4', [ResponsesController::class, 'submitBlok4'])->name('blok4.submit');
+
+// Login
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+
+// Logout
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
+
+// Dashboard 
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware('auth');
+
+Route::get('/export-excel', [DashboardController::class, 'exportExcel'])
+    ->middleware('auth')
+    ->name('export.excel');
