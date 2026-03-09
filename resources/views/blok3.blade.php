@@ -150,34 +150,33 @@ document.addEventListener('DOMContentLoaded', function() {
   const perolehan = document.getElementById('perolehan');
   const dataBox = document.getElementById('data_lainnya_box');
   const perencanaanBox = document.getElementById('perencanaan_box');
+  const perencanaanSelect = perencanaanBox.querySelector('select');
 
-  function checkLogic() {
+  function updateRequiredAndVisibility() {
 
       // Tampilkan box tambahan jika perolehan 1 atau 2
-      if(perolehan.value === "1" || perolehan.value === "2") {
-          dataBox.classList.remove('hidden');
-          dataBox.querySelectorAll('input, select').forEach(el => {
-              if(!el.closest('#perencanaan_box')) {
-                  el.setAttribute('required','required');
-              }
-          });
+      const showDataBox = perolehan.value === "1" || perolehan.value === "2";
+      dataBox.classList.toggle('hidden', !showDataBox);
 
-          // Tampilkan perencanaan hanya jika instansi 1-4
-          if(["1","2","3","4"].includes(instansiBlok1)) {
-              perencanaanBox.classList.remove('hidden');
-              perencanaanBox.querySelector('select').setAttribute('required','required');
-          } else {
-              perencanaanBox.classList.add('hidden');
-              perencanaanBox.querySelector('select').removeAttribute('required');
-          }
+      dataBox.querySelectorAll('input, select').forEach(el => {
+          // semua input/select di dataBox kecuali perencanaanBox
+          if(el.closest('#perencanaan_box')) return;
+          if(showDataBox) el.setAttribute('required', 'required');
+          else el.removeAttribute('required');
+      });
 
-      } else {
-          dataBox.classList.add('hidden');
-          dataBox.querySelectorAll('input, select').forEach(el => el.removeAttribute('required'));
-      }
+      // Perencanaan hanya jika instansi 1-4 dan dataBox ditampilkan
+      const showPerencanaan = showDataBox && ["1","2","3","4"].includes(instansiBlok1);
+      perencanaanBox.classList.toggle('hidden', !showPerencanaan);
+      if(showPerencanaan) perencanaanSelect.setAttribute('required', 'required');
+      else perencanaanSelect.removeAttribute('required');
   }
 
-  perolehan.addEventListener('change', checkLogic);
+  // Jalankan sekali saat load agar kondisi awal benar
+  updateRequiredAndVisibility();
+
+  // Event listener saat user ubah pilihan
+  perolehan.addEventListener('change', updateRequiredAndVisibility);
 
 });
 </script>

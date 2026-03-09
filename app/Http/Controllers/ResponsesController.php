@@ -90,6 +90,7 @@ class ResponsesController extends Controller
 
     public function submitBlok3(Request $request)
     {
+        // Validasi awal umum
         $request->validate([
             'data' => 'required|string|max:255',
             'perolehan' => 'required|in:1,2,3,4',
@@ -100,19 +101,30 @@ class ResponsesController extends Controller
             'q17' => 'nullable|integer|min:1|max:10',
         ]);
 
-        // Jika perolehan = 1 atau 2 wajib isi field tambahan
+        // Jika perolehan = 1 atau 2, wajib isi field tambahan
         if (in_array($request->perolehan, ['1','2'])) {
-            $request->validate([
+
+            // Atur rules tambahan
+            $rules = [
                 'sumber' => 'required|in:1,2,3,4,5',
                 'judul' => 'required|string|max:255',
                 'tahun' => 'required|integer|min:1900|max:2099',
-                'perencanaan' => 'required|in:1,2',
                 'q17' => 'required|integer|min:1|max:10',
-            ]);
+            ];
+
+            // Perencanaan wajib hanya jika instansi 1-4
+            if (in_array(session('blok1.instansi'), ['1','2','3','4'])) {
+                $rules['perencanaan'] = 'required|in:1,2';
+            }
+
+            // Jalankan validasi tambahan
+            $request->validate($rules);
         }
 
+        // Simpan data Blok 3 ke session
         session(['blok3' => $request->all()]);
 
+        // Redirect ke Blok 4
         return redirect()->route('blok4');
     }
 
