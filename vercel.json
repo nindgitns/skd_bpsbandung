@@ -17,7 +17,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "true",
-        "APP_URL": "",
+        "APP_URL": "https://skd-bpsbandung.vercel.app",
         "APP_KEY": "base64:BH+fbji29fw4G6Kd1vz7NfnuPd/drhnS/mYVrWr2gk0=",
 
         "DB_CONNECTION": "mysql",
