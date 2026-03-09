@@ -1,0 +1,39 @@
+{
+    "version": 2,
+    "framework": null,
+    "functions": {
+        "api/index.php": {
+        "runtime": "vercel-php@0.6.0"
+        }
+    },
+    "routes": [
+        {
+        "src": "/(.*)",
+        "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_ENV": "production",
+        "APP_DEBUG": "true",
+        "APP_URL": "",
+        "APP_KEY": "base64:BH+fbji29fw4G6Kd1vz7NfnuPd/drhnS/mYVrWr2gk0=",
+
+        "DB_CONNECTION": "mysql",
+        "DB_HOST": "e19b8k.h.filess.io",
+        "DB_PORT": "61032",
+        "DB_DATABASE": "skd_nearfolks",
+        "DB_USERNAME": "skd_nearfolks",
+        "DB_PASSWORD": "0408fb635d0ec700847dd0fbad719ad1bd939603",
+
+        "APP_CONFIG_CACHE": "/tmp/config.php",
+        "APP_EVENTS_CACHE": "/tmp/events.php",
+        "APP_PACKAGES_CACHE": "/tmp/packages.php",
+        "APP_ROUTES_CACHE": "/tmp/routes.php",
+        "APP_SERVICES_CACHE": "/tmp/services.php",
+        "VIEW_COMPILED_PATH": "/tmp",
+
+        "CACHE_DRIVER": "array",
+        "LOG_CHANNEL": "stderr",
+        "SESSION_DRIVER": "cookie"
+    }
+}
